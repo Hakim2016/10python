@@ -3,9 +3,11 @@ from bs4 import BeautifulSoup
 import os, time
 import re
 import http.cookiejar as cookielib
+import json
 # from PIL import Image
 
 baseurl = 'https://www.zhihu.com/'
+self_url = 'https://www.zhihu.com/settings/profile'
 agent = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36'
 headers = {
     'Host': 'www.zhihu.com',
@@ -16,7 +18,12 @@ headers = {
 ######构造用于网络请求的session
 session = requests.session()
 session.cookies = cookielib.LWPCookieJar(filename='cookies')
-session.cookies.load(ignore_discard=True)
+try:
+    session.cookies.load(ignore_discard=True)
+except:
+    pass
+
+
 
 def captchaZhihu():
     ###### Get Captcha img
@@ -96,9 +103,48 @@ def isLogin():
     else:
         return False
 
+def get_self_code():
+    # cookie already in hand!
+    personal_code_reg = re.compile('name="url_token" id="url_token" value="(.*?)" required>')
+    self_html = session.get(url=self_url, headers=headers, allow_redirects=False)
+    # print(self_html.text)
+    personal_code = personal_code_reg.findall(self_html.text, re.S)[0]
+    print(personal_code)
+    return personal_code
+
+def get_personal_info(self_code):
+    personal_info_base = 'https://www.zhihu.com/people/' + self_code + '/'
+    activities_url = personal_info_base + 'activities/'
+    # urls related to personal infomation
+    following_url = personal_info_base + 'following/'
+    followers_url = personal_info_base + 'followers/'
+    following_columns_url = following_url + 'columns/'
+    following_topics_url = following_url + 'topics/'
+    following_questions_url = following_url + 'questions/'
+    following_collections_url = following_url + 'collections/'
+
+    print(activities_url)
+    act_cont = session.get(url=activities_url, headers=headers)
+    follows = re.findall('<div class="NumberBoard-name">(.*?)</div><div class="NumberBoard-value">(.*?)</div>', act_cont.text)
+    concerns = re.findall('<span class="Profile-lightItemName">(.*?)</span><span class="Profile-lightItemValue">(.*?)</span>', act_cont.text,re.S)
+
+    # following_cnt = follows[0][1]
+    # followers_cnt = follows[1][1]
+
+    # topics_cnt = concerns[0][1]
+    # columns_cnt = concerns[1][1]
+    # questions_cnt = concerns[2][1]
+    # collections_cnt = concerns[3][1]
+    print(follows)
+    print(concerns)
+    # print(act_cont.json())
+
 if __name__ == '__main__':
     if isLogin():
         print('You have already login!')
+        self_code = get_self_code()
+        get_personal_info(self_code)
+
     else:
         email = input('please input your account!\n')
         psswd = input('please input your password!\n')
