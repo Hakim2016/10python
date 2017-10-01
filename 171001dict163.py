@@ -17,12 +17,12 @@ youdao_url = 'http://account.youdao.com/login'
 # 构造 Request headers
 agent = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36'
 headers = {
-	'Host':'shared.ydstatic.com',
-	'Referer':'http://account.youdao.com/login',
+    'Host':'shared.ydstatic.com',
+    'Referer':'http://account.youdao.com/login',
     'User-Agent': agent
 }
 
-##########Contruct session to connect the server
+# #########Contruct session to connect the server
 session = requests.session()
 session.cookies = cookielib.LWPCookieJar(file='~/sessions/youdao_cookie')
 

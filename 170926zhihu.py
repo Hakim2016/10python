@@ -17,9 +17,10 @@ headers = {
 }
 ######构造用于网络请求的session
 session = requests.session()
-session.cookies = cookielib.LWPCookieJar(filename='sessions/zhihu_cookie')
+# session.cookies = cookielib.LWPCookieJar(filename='sessions/zhihu_cookies')
+session.cookies = cookielib.LWPCookieJar(filename='cookies')
 try:
-    session.cookies.load(ignore_discard=True)
+    session.cookies.load('~/sessions/zhihu_cookies', ignore_discard=True)
 except:
     pass
 
