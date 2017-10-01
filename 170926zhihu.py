@@ -128,6 +128,43 @@ def get_personal_info(self_code):
     follows = re.findall('<div class="NumberBoard-name">(.*?)</div><div class="NumberBoard-value">(.*?)</div>', act_cont.text)
     concerns = re.findall('<span class="Profile-lightItemName">(.*?)</span><span class="Profile-lightItemValue">(.*?)</span>', act_cont.text,re.S)
 
+# 1506837354
+# 1504206499
+    after_id = int(time.time())
+    per_post_data = {
+        'limit':'20',
+        'after_id':after_id,
+        'desktop':'True'
+    }
+
+    '''
+    headers = {
+    'Host': 'www.zhihu.com',
+    'Origin': 'https://www.zhihu.com',
+    'Referer': 'https://www.zhihu.com/',
+    'User-Agent': agent
+}
+
+
+https://www.zhihu.com/people/ke-ren-33-46/activities
+https://www.zhihu.com/people/ke-ren-33-46/activities/
+
+accept:application/json, text/plain, */*
+    '''
+    headers['accept'] = 'application/json, text/plain, */*'
+    headers['Referer'] = activities_url
+    headers['authorization'] = 'Bearer Mi4xelhWdkFBQUFBQUFBQUVJR0xFczREQmNBQUFCaEFsVk54TFAwV1FDTzd0TXlTN2xPaTNTZ2QzWEVOTXhBZzZ1UUZR|1506617028|5ef624575e9eb3d8f2f56def8af0d3f7e554273e'
+    headers['x-api-version'] = '3.0.40'
+    headers['x-udid'] = 'AABCBixLOAyPTvfzgvHdLgczK-8UpO-HanY='
+    # 'x-api-version':'3.0.40'
+# x-udid:AABCBixLOAyPTvfzgvHdLgczK-8UpO-HanY=
+
+    json_url = 'https://www.zhihu.com/api/v4/members/ke-ren-33-46/activities'
+
+    print(headers)
+    personal_jsn = session.get(url=json_url, headers=headers,data= per_post_data)
+    print(personal_jsn)
+    # print(json_str)
     # following_cnt = follows[0][1]
     # followers_cnt = follows[1][1]
 
