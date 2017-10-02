@@ -13,16 +13,18 @@ import requests
 import re
 import http.cookiejar as cookielib
 import hashlib
+import json
 
 # youdao_url = 'http://account.youdao.com/login'
 # youdao_url = 'http://account.youdao.com/login?service=dict&back_url=http://dict.youdao.com/wordbook/wordlist'
+# youdao_url = 'http://account.youdao.com/login?service=dict&back_url=http%3A%2F%2Fdict.youdao.com%2Fsearch%3Fq%3Dresume%26tab%3D%23keyfrom%3D%24%7Bkeyfrom%7D'
 youdao_url = 'https://logindict.youdao.com/login/acc/login'
 # 构造 Request headers
 agent = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36'
 headers = {
     'Host': 'shared.ydstatic.com',
     'Origin': 'http://account.youdao.com',
-    'Referer': 'http://account.youdao.com/login?service=dict&back_url=http://dict.youdao.com/wordbook/wordlist%3Fkeyfrom%3Dlogin_from_dict2.index',
+    'Referer': 'http://account.youdao.com/login?service=dict&back_url=http%3A%2F%2Fdict.youdao.com%2Fsearch%3Fq%3Dhakim%26tab%3D%23keyfrom%3D%24%7Bkeyfrom%7D',
     'User-Agent': agent
 }
 
@@ -37,22 +39,30 @@ except:
 
 
 def login(email, secret):
+    print('before encode email is ' + email)
+    email = email.encode('utf-8')
+    print('after encode email is ')
+    print(email)
     secret = encrypt_psswd(secret)
     params = {
         'app': 'web',
         'tp': 'urstoken',
         'cf': 3,
         'fr': 1,
-        'ru': 'http://dict.youdao.com/wordbook/wordlist?keyfrom=login_from_dict2.index',
+        'ru': 'http://dict.youdao.com/search?q=hakim&tab=#keyfrom=${keyfrom}',
         'product': 'DICT',
         'type': 1,
-        'um': 'true'
+        'um': 'true',
+        'username': '13270828661@163.com',
+        'password': secret,
     }
     postdata = {
         'username': '13270828661@163.com',
         'password': secret,
     }
-    login = session.post(youdao_url, data=postdata, headers=headers, params=params)
+    # postdata = json.dumps(postdata)
+    # login = session.post(youdao_url, data=postdata, headers=headers, params=params)
+    login = session.post(youdao_url, headers=headers, params=params)
     session.cookies.save()
     cntnt = login.text
     print(cntnt)
