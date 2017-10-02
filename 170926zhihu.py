@@ -18,9 +18,10 @@ headers = {
 ######构造用于网络请求的session
 session = requests.session()
 # session.cookies = cookielib.LWPCookieJar(filename='sessions/zhihu_cookies')
-session.cookies = cookielib.LWPCookieJar(filename='cookies')
+session.cookies = cookielib.LWPCookieJar(filename='./sessions/zhihu_cookies')
 try:
-    session.cookies.load('~/sessions/zhihu_cookies', ignore_discard=True)
+    session.cookies.load('./sessions/zhihu_cookies', ignore_discard=True)
+    # session.cookies.load(ignore_discard=True)
 except:
     pass
 
@@ -133,9 +134,9 @@ def get_personal_info(self_code):
 # 1504206499
     after_id = int(time.time())
     per_post_data = {
-        'limit':'20',
-        'after_id':after_id,
-        'desktop':'True'
+        'limit': '20',
+        'after_id': after_id,
+        'desktop': 'True'
     }
 
     '''
@@ -163,7 +164,7 @@ accept:application/json, text/plain, */*
     json_url = 'https://www.zhihu.com/api/v4/members/ke-ren-33-46/activities'
 
     print(headers)
-    personal_jsn = session.get(url=json_url, headers=headers,data= per_post_data)
+    personal_jsn = session.get(url=json_url, headers=headers, data=per_post_data).text#.json()
     print(personal_jsn)
     # print(json_str)
     # following_cnt = follows[0][1]
@@ -173,8 +174,8 @@ accept:application/json, text/plain, */*
     # columns_cnt = concerns[1][1]
     # questions_cnt = concerns[2][1]
     # collections_cnt = concerns[3][1]
-    print(follows)
-    print(concerns)
+    # print(follows)
+    # print(concerns)
     # print(act_cont.json())
 
 if __name__ == '__main__':
