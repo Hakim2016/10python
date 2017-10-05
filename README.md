@@ -31,6 +31,13 @@ Zhihu login!
             cate_id int auto_increment primary key,
             cate_name varchar(40));
 
+        # 创建中文报错 需要制定存放的字符类型
+        drop table categories;
+        create table if not exists categories(
+            cate_id int auto_increment primary key,
+            cate_name varchar(40),
+            create_time date)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
 
