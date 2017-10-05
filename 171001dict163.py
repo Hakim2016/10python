@@ -86,9 +86,23 @@ def get_wordbook():
     print(acct)
     session.cookies.save()
 
+def get_words():
+    '''
+http://dict.youdao.com/wordbook/wordlist?keyfrom=dict2.index
+http://dict.youdao.com/wordbook/wordlist?p=1&tags=
+http://dict.youdao.com/wordbook/wordlist?p=2&tags=
+http://dict.youdao.com/wordbook/wordlist?p=3&tags=
+
+    :return:
+    '''
+    wrds_url = ''
+    pass
+
 if __name__ == '__main__':
     email = '13270828661@163.com'
     psswd = '099cd4de374049a3cb5738f7e751e527'
     login(email, psswd)
     get_wordbook()
+
+    get_words()
 
