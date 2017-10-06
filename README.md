@@ -27,9 +27,7 @@ Zhihu login!
             add_time date,
             cate_id int)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-        create table if not exists categories(
-            cate_id int auto_increment primary key,
-            cate_name varchar(40));
+
 
         # 创建中文报错 需要制定存放的字符类型
         drop table categories;
@@ -37,7 +35,7 @@ Zhihu login!
             cate_id int auto_increment primary key,
             cate_name varchar(40),
             create_time date)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
+        insert into categories(cate_name) values('晶晶');
 
 
 
