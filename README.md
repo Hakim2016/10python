@@ -35,7 +35,13 @@ Zhihu login!
             cate_id int auto_increment primary key,
             cate_name varchar(40),
             create_time date)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-        insert into categories(cate_name) values('晶晶');
+        insert into categories(cate_name,create_time) values('无标签', now());
+        insert into categories(cate_name,create_time) values('词根词缀', now());
+        insert into categories(cate_name,create_time) values('中口背诵单词', now());
+        insert into categories(cate_name,create_time) values('新概念3', now());
+        insert into categories(cate_name,create_time) values('ebs', now());
+        insert into categories(cate_name,create_time) values('黄老师翻译', now());
+        insert into categories(cate_name,create_time) values('sherlock holmes', now());
 
 
 

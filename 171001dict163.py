@@ -2,6 +2,7 @@ import requests
 import re
 import http.cookiejar as cookielib
 import hashlib
+import math
 import os
 
 yd_login_url = 'https://logindict.youdao.com/login/acc/login'
@@ -86,16 +87,38 @@ def get_wordbook():
     print(acct)
     session.cookies.save()
 
+# match the category list with data from database
+def get_cate_list(wrdL):
+    print('in get_cate_list')
+    for i in wrdL:
+        print(i)
+    pass
+
+
 def get_words():
+    each_page = 15
+    wrds_url = 'http://dict.youdao.com/wordbook/wordlist?keyfrom=dict2.index'
+    wrd_cntnt = session.get(url=wrdbk_url, headers=headers).text
+    # print(wrd_cntnt)
+    # output_html(cntnt=wrd_cntnt, name='word_first.html')
+    wrd_total = int(re.findall('共计 <strong>(.*?)</strong> 个单词', wrd_cntnt)[0])
+    cate_list = re.findall('<option value="(.*?)" >', wrd_cntnt)
+    get_cate_list(cate_list)
+    print(cate_list)
+    pages = math.ceil(wrd_total/each_page)
+
+    # fetch a list of words and insert into table every page
+    # for i in range(2, pages + 1):
+    #     print(i)
+
     '''
 http://dict.youdao.com/wordbook/wordlist?keyfrom=dict2.index
 http://dict.youdao.com/wordbook/wordlist?p=1&tags=
 http://dict.youdao.com/wordbook/wordlist?p=2&tags=
 http://dict.youdao.com/wordbook/wordlist?p=3&tags=
-
-    :return:
     '''
-    wrds_url = ''
+    # get the amount of words
+
     pass
 
 if __name__ == '__main__':
