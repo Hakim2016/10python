@@ -1,8 +1,31 @@
 import pymysql as mysql
+import time
+import traceback
 
 # conn = mysql.connect(host='localhost', user='root', passwd='root', db='youdaodb', port=3306)
-
-def youdao_add():
+# youdao_add(word[i],wrd_time[i],tags[wrd_tag[i]])
+def youdao_add(word, datestr, tag):
+    date = time.strptime(datestr, '%Y-%m-%d')
+    tag = int(tag)
+    conn = mysql.connect(host='localhost', user='root', passwd='root', db='youdaodb', port=3306)
+    # user cursor() to get cursor operation
+    cursor = conn.cursor()
+    sql = """
+        insert into words(word, add_time,cate_id) values(%s,%s,%s)
+    """
+    params = (word,date,tag)
+    try:
+        # execute this sql
+        cursor.execute(sql, params)
+        conn.commit()
+    except:
+        print('error happens')
+        traceback.print_exc()
+        # if err happens rollback
+        conn.rollback()
+    finally:
+        # close the connecttion
+        conn.close()
     pass
 
 def youdao_dlt():
@@ -61,8 +84,7 @@ def yd_cate_cnt():
 #          values('Hakim', 'He', 20, 'M', 7000)"""
 
 if __name__ == '__main__':
-    cat_cnt = yd_cate_cnt()
-    print(cat_cnt)
+    youdao_add('Dairy', '2017-08-03', 3)
     pass
 
 # try:
