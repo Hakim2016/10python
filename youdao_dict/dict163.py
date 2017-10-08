@@ -1,4 +1,4 @@
-from _youdao_dict import dict163_db as yddb
+from _10python.youdao_dict import dict163_db as yddb
 import requests
 import re
 import http.cookiejar as cookielib
@@ -26,9 +26,9 @@ headers = {
 
 # #########Contruct session to connect the server
 session = requests.session()
-session.cookies = cookielib.LWPCookieJar('./sessions/yd_dict_cookie')
+session.cookies = cookielib.LWPCookieJar('../sessions/yd_dict_cookie')
 try:
-    session.cookies.load('./sessions/yd_dict_cookie')
+    session.cookies.load('../sessions/yd_dict_cookie')
 except:
     print('have not generated the cookies!')
     pass
