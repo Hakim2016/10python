@@ -1,3 +1,4 @@
+from _youdao_dict import dict163_db as yddb
 import requests
 import re
 import http.cookiejar as cookielib
@@ -6,19 +7,18 @@ import math
 import json
 import os
 from bs4 import BeautifulSoup
-from youdao import _171007dict163_db as yddb
 
 with open('./others/word_first.html', 'r',encoding='utf8') as f:
     first_cnt = f.read()
 
-yd_login_url = 'https://logindict.11111.com/login/acc/login'
+yd_login_url = 'https://logindict.youdao.com/login/acc/login'
 # http://dict.youdao.com/wordbook/wordlist
-wrdbk_url = 'http://dict.11111.com/wordbook/wordlist?keyfrom=login_from_dict2.index'
+wrdbk_url = 'http://dict.youdao.com/wordbook/wordlist?keyfrom=login_from_dict2.index'
 # 构造 Request headers
 agent = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36'
 headers = {
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-    'Host': 'dict.11111.com',
+    'Host': 'dict.youdao.com',
     'Upgrade-Insecure-Requests': '1',
     'Connection': 'keep-alive',
     'User-Agent': agent
@@ -42,7 +42,7 @@ def login(email, secret):
         'tp': 'urstoken',
         'cf': 3,
         'fr': 1,
-        'ru': 'http://dict.11111.com/search?q=hakim&tab=#keyfrom=${keyfrom}',
+        'ru': 'http://dict.youdao.com/search?q=hakim&tab=#keyfrom=${keyfrom}',
         'product': 'DICT',
         'type': 1,
         'um': 'true',
@@ -51,20 +51,20 @@ def login(email, secret):
     }
 
     login_headers = {
-        'Host': 'dict.11111.com',
-        'Origin': 'http://account.11111.com',
+        'Host': 'dict.youdao.com',
+        'Origin': 'http://account.youdao.com',
         # 'Referer': 'http://account.youdao.com/login?service=dict&back_url=http%3A%2F%2Fdict.youdao.com%2Fsearch%3Fq%3Dhakim%26tab%3D%23keyfrom%3D%24%7Bkeyfrom%7D',
-        'Referer': 'http://account.11111.com/login?service=dict&back_url=http://dict.11111.com/wordbook/wordlist%3Fkeyfrom%3Dnull',
+        'Referer': 'http://account.youdao.com/login?service=dict&back_url=http://dict.youdao.com/wordbook/wordlist%3Fkeyfrom%3Dnull',
         'User-Agent': agent
     }
     headers = {
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-        'Host': 'dict.11111.com',
+        'Host': 'dict.youdao.com',
         'Upgrade-Insecure-Requests': '1',
         'Connection': 'keep-alive',
         'User-Agent': agent
     }
-    yd_login_url = 'https://logindict.11111.com/login/acc/login'
+    yd_login_url = 'https://logindict.youdao.com/login/acc/login'
     login = session.post(yd_login_url, headers=login_headers, data=postdata)
     session.cookies.save()
     cntnt = login.text
@@ -84,8 +84,8 @@ def encrypt_psswd(psswd):
 
 
 def isLogin():
-    wrdbk_url2 = 'http://dict.11111.com/w/eng/hakim/#keyfrom=dict2.index'
-    headers['Referer'] = 'http://dict.11111.com/wordbook/wordlist?keyfrom=login_from_dict2.index'
+    wrdbk_url2 = 'http://dict.youdao.com/w/eng/hakim/#keyfrom=dict2.index'
+    headers['Referer'] = 'http://dict.youdao.com/wordbook/wordlist?keyfrom=login_from_dict2.index'
     # browser private info to verify if we successfully login
     sssn_rsp = session.get(wrdbk_url2, headers=headers)
     output_html(sssn_rsp.text, 'youdao2.html')
@@ -114,7 +114,7 @@ def convert_to_json_string_1(data):
 # deal with the first page, special logic need to consider
 def get_first_page():
     each_page = 15
-    wrds_url = 'http://dict.11111.com/wordbook/wordlist?keyfrom=dict2.index'
+    wrds_url = 'http://dict.youdao.com/wordbook/wordlist?keyfrom=dict2.index'
     wrd_cntnt = session.get(url=wrds_url, headers=headers).text
     wrd_total = int(re.findall('共计 <strong>(.*?)</strong> 个单词', wrd_cntnt)[0])
     cate_list = re.findall('<option value="(.*?)" >', wrd_cntnt)
@@ -124,7 +124,7 @@ def get_first_page():
     return (tags, pages, wrd_cntnt)
 
 def get_other_page(page):
-    wrd_url = 'http://dict.11111.com/wordbook/wordlist?p=%d&tags='%page
+    wrd_url = 'http://dict.youdao.com/wordbook/wordlist?p=%d&tags='%page
     wrd_cntnt = session.get(url=wrd_url, headers=headers).text
     return wrd_cntnt
 
