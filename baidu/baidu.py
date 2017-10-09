@@ -20,7 +20,6 @@ import base64
 import time
 from _10python._Common.Utility import output_html
 
-
 """
 1. 百度的模拟登录，请确保你的账号能在浏览器下登录不需要验证码
  百度的三次登录错误后，才会出现验证码，但是还有一种情况是百度的账号异常
@@ -50,11 +49,12 @@ if there are still questions you encounter, feel free to contact by email
 
 # gid 在同一个登录的 session 相同
 def get_gid():
+    # 7BE5CDB-3E31-4524-90EC-4CD51514147F
     gid = "xxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx"
     gid = list(gid)
     for xy in range(len(gid)):
         if gid[xy] in "xy":
-            r = int(random.random()*16)
+            r = int(random.random() * 16)
             if gid[xy] == "x":
                 gid[xy] = hex(r).replace("0x", '').upper()
             else:
@@ -100,6 +100,7 @@ session = requests.session()
 # 访问登录页面的初始页面，然后这次访问会话带上 cookies
 session.get("https://passport.baidu.com/v2/?login", headers=headers)
 
+
 # 同一个登录下 token 是唯一的
 def get_token():
     # 此处必须是自己构造 url 不能采用 params 的参数， params 参数的顺序是变化的
@@ -110,6 +111,7 @@ def get_token():
     token_url = token_url + init_time + "&class=login&gid="
     token_url = token_url + gid + "&logintype=basicLogin&callback="
     token_url = token_url + token_callback
+    print('hakim:' + token_url)
     # token_params = {
     #     "getapi": "",
     #     "tpl": "pp",
@@ -121,10 +123,16 @@ def get_token():
     #     "callback": get_callback()
     # }
     token_html = session.get(token_url, headers=headers)
+    # print(token_html.text)
+    output_html(token_html.text, 'tokem.html')
     token_content_all = token_html.text.replace(token_callback, "")
     token_content_all = eval(token_content_all)
     # print(token_content_all)
-    return token_content_all['data']['token']
+    a = token_content_all['data']['token']
+    print('hakim a = ')
+    print(a)
+    return a  # token_content_all['data']['token']
+
 
 token = (get_token())
 
@@ -142,7 +150,12 @@ def get_publickey(token):
     publickey_html = session.get(publickey_url, headers=headers)
     publickey_content_all = eval(publickey_html.text.replace(publickey_callback, ""))
 
-    return publickey_content_all['pubkey'], publickey_content_all['key']
+    pubkey = publickey_content_all['pubkey']
+    key = publickey_content_all['key']
+    print('pubkey = ' + pubkey)
+    print('key = ' + key)
+    # return publickey_content_all['pubkey'], publickey_content_all['key']
+    return pubkey, key
 
 
 # print(get_publickey(token))
@@ -161,8 +174,8 @@ def login(username, password, key):
         "staticpage": "https://passport.baidu.com/static/passpc-account/html/v3Jump.html",
         "charset": "UTF-8",
         "token": token,
-        "tpl": "pp",
-        "subpro": "",
+        "tpl": "pp",  # Hakim:netdisk
+        "subpro": "",  # Hakim:netdisk_web
         "apiver": "v3",
         "tt": login_time,
         "codestring": "",
@@ -190,8 +203,20 @@ def login(username, password, key):
     login_html = session.post(login_url, data=login_postdata, headers=headers)
     print(login_html.cookies)
     # pan_url = 'http://pan.baidu.com'
-    pan_url = 'https://pan.baidu.com/disk/home?#list/path=%2F&vmode=list'
-    sss = session.get(pan_url, headers=headers)
+    pan_headers = {
+        'User-Agent': agent,
+        "Host": "pan.baidu.com",
+        # "Referer": "https://www.baidu.com/"
+        "Referer": "https://pan.baidu.com/disk/home"
+    }
+    center_headers = {
+        'User-Agent': agent,
+        "Host": "pan.baidu.com"
+        # "Referer": "https://passport.baidu.com/v2/account/password?tpl="
+    }
+    # pan_url = 'https://pan.baidu.com/disk/home?#list/path=%2F&vmode=list'
+    center_url = 'https://passport.baidu.com/center'
+    sss = session.get(center_url, headers=pan_headers)
     sss.encoding = 'utf-8'
     pan_cntnt = sss.text
     # print(pan_cntnt)
@@ -201,14 +226,14 @@ def login(username, password, key):
     #     f.write(html_index.content)
     #     f.close()
 
+
 try:
     input = raw_input
 except:
     pass
 
-
 if __name__ == "__main__":
-    username = '13270828661'#input("请输入你的手机号或者邮箱\n >:")
-    secret = '0513865219hjj'#input("请输入你的密码\n >:")
+    username = '13270828661'  # input("请输入你的手机号或者邮箱\n >:")
+    secret = '0513865219hjj'  # input("请输入你的密码\n >:")
     print('Prepare to login!')
     login(username, get_password(secret, pubkey), key)
