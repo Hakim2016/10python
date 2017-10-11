@@ -45,7 +45,21 @@ post login 时候 还有 ppui_logintime 时间间隔参数
 if there are still questions you encounter, feel free to contact by email
 
 """
+# 构造 Request headers
 
+agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36'
+headers = {
+    'User-Agent': agent,
+    "Host": "passport.baidu.com",
+    "Referer": "https://www.baidu.com/"
+}
+
+session = requests.session()
+# 访问登录页面的初始页面，然后这次访问会话带上 cookies
+ss = session.get("https://passport.baidu.com/v2/?login", headers=headers)
+ss.encoding = 'utf-8'
+print(ss.cookies)
+output_html(ss.text, 'login.html')
 
 # gid 在同一个登录的 session 相同
 def get_gid():
@@ -86,21 +100,6 @@ def get_password(password_input, pubkey):
     psword = base64.b64encode(psword)
     return psword.decode("utf-8")
 
-
-# 构造 Request headers
-
-agent = 'Mozilla/5.0 (Windows NT 5.1; rv:33.0) Gecko/20100101 Firefox/33.0'
-headers = {
-    'User-Agent': agent,
-    "Host": "passport.baidu.com",
-    "Referer": "https://www.baidu.com/"
-}
-gid = get_gid()
-session = requests.session()
-# 访问登录页面的初始页面，然后这次访问会话带上 cookies
-session.get("https://passport.baidu.com/v2/?login", headers=headers)
-
-
 # 同一个登录下 token 是唯一的
 def get_token():
     # 此处必须是自己构造 url 不能采用 params 的参数， params 参数的顺序是变化的
@@ -109,6 +108,7 @@ def get_token():
     init_time = str(int(time.time() * 1000))
     token_url = "https://passport.baidu.com/v2/api/?getapi&tpl=pp&apiver=v3&tt="
     token_url = token_url + init_time + "&class=login&gid="
+    print('what is the gid like = ' + gid)
     token_url = token_url + gid + "&logintype=basicLogin&callback="
     token_url = token_url + token_callback
     print('hakim:' + token_url)
@@ -133,10 +133,6 @@ def get_token():
     print(a)
     return a  # token_content_all['data']['token']
 
-
-token = (get_token())
-
-
 def get_publickey(token):
     publickey_callback = get_callback()
     publickey_url = "https://passport.baidu.com/v2/getpublickey?token="
@@ -157,25 +153,20 @@ def get_publickey(token):
     # return publickey_content_all['pubkey'], publickey_content_all['key']
     return pubkey, key
 
-
-# print(get_publickey(token))
-
-pubkey, key = get_publickey(token)
-
-# 随机停顿 几秒 模拟真实的浏览情况
-time.sleep(random.randint(2, 5))
-
-
 def login(username, password, key):
+    print(username)
+    print(password)
+    print(key)
     login_url = "https://passport.baidu.com/v2/api/?login"
     login_time = str(int(time.time() * 1000))
     login_callback = get_callback()
     login_postdata = {
-        "staticpage": "https://passport.baidu.com/static/passpc-account/html/v3Jump.html",
+        "staticpage": "https://pan.baidu.com/res/static/thirdparty/pass_v3_jump.html",
+        # "staticpage": "https://passport.baidu.com/static/passpc-account/html/v3Jump.html",
         "charset": "UTF-8",
         "token": token,
-        "tpl": "pp",  # Hakim:netdisk
-        "subpro": "",  # Hakim:netdisk_web
+        "tpl": "netdisk",#"pp",  # Hakim:netdisk
+        "subpro": "netdisk_web",  # Hakim:netdisk_web
         "apiver": "v3",
         "tt": login_time,
         "codestring": "",
@@ -205,9 +196,9 @@ def login(username, password, key):
     # pan_url = 'http://pan.baidu.com'
     pan_headers = {
         'User-Agent': agent,
-        "Host": "pan.baidu.com",
+        "Host": "www.baidu.com"
         # "Referer": "https://www.baidu.com/"
-        "Referer": "https://pan.baidu.com/disk/home"
+        # "Referer": "https://pan.baidu.com/disk/home"
     }
     center_headers = {
         'User-Agent': agent,
@@ -215,8 +206,9 @@ def login(username, password, key):
         # "Referer": "https://passport.baidu.com/v2/account/password?tpl="
     }
     # pan_url = 'https://pan.baidu.com/disk/home?#list/path=%2F&vmode=list'
-    center_url = 'https://passport.baidu.com/center'
-    sss = session.get(center_url, headers=pan_headers)
+    # center_url = 'https://passport.baidu.com/center'
+    baidu_url = 'http://www.baidu.com'
+    sss = session.get(baidu_url, headers=pan_headers)
     sss.encoding = 'utf-8'
     pan_cntnt = sss.text
     # print(pan_cntnt)
@@ -226,14 +218,16 @@ def login(username, password, key):
     #     f.write(html_index.content)
     #     f.close()
 
-
-try:
-    input = raw_input
-except:
-    pass
-
 if __name__ == "__main__":
     username = '13270828661'  # input("请输入你的手机号或者邮箱\n >:")
     secret = '0513865219hjj'  # input("请输入你的密码\n >:")
-    print('Prepare to login!')
+
+    global gid
+    gid = get_gid()
+    print('gid = '+ gid)
+    token = (get_token())
+    pubkey, key = get_publickey(token)
+
+    # 随机停顿 几秒 模拟真实的浏览情况
+    time.sleep(random.randint(2, 5))
     login(username, get_password(secret, pubkey), key)
