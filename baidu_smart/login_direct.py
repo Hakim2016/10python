@@ -59,6 +59,8 @@ def get_token(gid, callback):
         # 如果json字符串中带有单引号，会解析出错，只有统一成双引号才可以正确的解析
         #data = eval(re.search(r'.*?\((.*)\)', resp.text).group(1))
         data = json.loads(re.search(r'.*?\((.*)\)', resp.text).group(1).replace("'", '"'))
+        print(resp.text)
+        print(data)
         return data.get('data').get('token')
     else:
         print('获取token失败')
@@ -92,6 +94,7 @@ def encript_password(password, pubkey):
 
 
 def login(token, gid, callback, rsakey, username, password):
+    print('callback = ' + callback)
     post_data = {
         'staticpage': 'http://pan.baidu.com/res/static/thirdparty/pass_v3_jump.html',
         'charset': 'utf-8',
@@ -142,25 +145,42 @@ def login(token, gid, callback, rsakey, username, password):
               'ar1heSX5LvXuN-22IfhjvyRDQIAHcvLkGx0IGEvaDp7Nmk2ZjVlOg5RDn4fbB9oB3URDQIAHcvLrOnxpeSq7b_-s'
               '-yz47Dgv4vUi_ua6ZrtgvCUDQIAHcvLS7au-rv1suCh7LPsvO-_4NSL1KTFtsWy3a_L',
         'callback': 'parent.'+callback
+    #     bd__cbs__a59usm
+    #     bd__pcbs__kw7m3d
     }
-    resp = session.post(url='https://passport.baidu.com/v2/api/?login', data=post_data, headers=headers)
+    # pan_url = 'https://pan.baidu.com/res/static/thirdparty/pass_v3_jump.html'
+    pan_url = 'https://passport.baidu.com/v2/api/?login'
+    # resp = session.post(url='https://passport.baidu.com/v2/api/?login', data=post_data, headers=headers)
+    resp = session.post(url=pan_url, data=post_data, headers=headers)
+    resp.encoding = 'utf-8'
+    output_html(resp.text, 'login_baidussssssss.html')
     if 'err_no=0' in resp.text:
         print('登录成功')
     else:
         print('登录失败')
 
 if __name__ == '__main__':
-    name = input('请输入用户名:\n')
-    passwd = input('请输入密码:\n')
+    print('Input username and password!')
+    name = '13270828661'
+    passwd = '0513865219hjj'
+    # name = input('请输入用户名:\n')
+    # passwd = input('请输入密码:\n')
 
     cur_gid = get_gid()
+    print('1 cur_gid = ' + cur_gid)
+
     cur_callback = get_callback()
+    print('2 callback = ' + cur_callback)
+
     cur_token = get_token(cur_gid, cur_callback)
+    print('3 cur_token = ' + cur_token + '\n        via cur_gid & cur_callback')
+
     cur_pubkey, cur_key = get_rsa_key(cur_token, cur_gid, cur_callback)
+    print('4 cur_pubkey = ' + cur_pubkey + '& cur_key = ' + cur_key + '\n       via cur_gid, cur_callback & cur_token')
     encript_pass = encript_password(passwd, cur_pubkey)
-    login(cur_token, cur_gid, cur_callback, cur_key, name, encript_pass)
+    login(cur_token, cur_gid, get_callback().replace('cbs', 'pcbs'), cur_key, name, encript_pass)
 
     ss = session.get('http://pan.baidu.com/disk/home', headers=headers)
     ss.encoding = 'utf-8'
     output_html(ss.text, 'another_baidu.html')
-    print(ss.text)
+    # print(ss.text)

@@ -160,6 +160,7 @@ def login(username, password, key):
     login_url = "https://passport.baidu.com/v2/api/?login"
     login_time = str(int(time.time() * 1000))
     login_callback = get_callback()
+    print('callback = ' + login_callback)
     login_postdata = {
         "staticpage": "https://pan.baidu.com/res/static/thirdparty/pass_v3_jump.html",
         # "staticpage": "https://passport.baidu.com/static/passpc-account/html/v3Jump.html",
