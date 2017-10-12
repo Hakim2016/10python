@@ -5,7 +5,6 @@ import requests
 import execjs
 import rsa
 import base64
-from _10python._Common.Utility import output_html
 
 js_path = 'login.js'
 headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/537.36 '
@@ -16,6 +15,15 @@ headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleW
 session = requests.session()
 session.get('https://pan.baidu.com', headers=headers)
 
+def output_html(cntnt, name):
+    path1 = '../others/'
+    path2 = './others/'
+    try:
+        with open(path1 + name, 'w', encoding='utf-8') as f:
+            f.write(cntnt)
+    except:
+        with open(path2 + name, 'w', encoding='utf-8') as f:
+            f.write(cntnt)
 
 def _get_runntime():
     """
@@ -123,27 +131,7 @@ def login(token, gid, callback, rsakey, username, password):
         'crypttype': 12,
         'ppui_logintime': 33554,
         'countrycode': '',
-        'dv': 'MDEwAAoAEgAKBScAMgAAAF00AA0CABvLy0ru-Kzto-S297rluuq56baC3YLxhOaL4pYJAgAi3d6dnPz8_'
-              'Pz8fIWF0ZDemcuKx5jHl8SUy_-g_4z5m_af6wgCACHT0C4u39_fh-66-7XyoOGs86z8r_-glMuU5IX2hfKd7'
-              '4sNAgAdy8uYnYXRkN6Zy4rHmMeXxJTL_6D_ivmc7qDBrMkHAgAEy8vLywkCACTT0K-vUFBQUFAC_Pyo6afgs'
-              'vO-4b7uve2yhtmG9pfkl-CP_ZkIAgAh09Cvrq6urvyXw4LMi9mY1YrVhdaG2e2y7Z38j_yL5JbyCAIAIdPQe'
-              'nqsrKzjo_e2-L_trOG-4bHisu3Zhtms37rIhueK7wwCAB_TNjY2Nn2azo_BhtSV2IfYiNuL1OC_4JXmg_G_3'
-              'rPWDAIAH9M2NjY2f287ejRzIWAtci19Ln4hFUoVYBN2BEorRiMMAgAf0zY2NjZ34rb3uf6s7aD_oPCj86yYx5'
-              'jtnvuJx6bLrgcCAATLy8vLDAIAH9Pb29vb_CZyM306aClkO2Q0ZzdoXANcKVo_TQNiD2oHAgAEy8vLywwCAB_'
-              'TNjY2NhMPWxpUE0EATRJNHU4eQXUqdQBzFmQqSyZDDQIAHcvL6X5mMnM9eihpJHskdCd3KBxDHGkafw1DIk8q'
-              'CQIAJNPQUFCOjo6OjqwsLHg5dzBiI24xbj5tPWJWCVYjUDVHCWgFYAgCACHT0KqqWlpaewVREF4ZSwpHGEcXRB'
-              'RLfyB_D24dbhl2BGAHAgAEy8vLywkCABTLyPDxOTk5OTkmfH1-fH26uu7u_wgCAAnLyISFCgoKFz4IAgAJy8i'
-              'YmR4eHgIoBwIABMvLy8sOAgAByxUCAAjLy8qR4PdMcgECAAbLysrFQbcFAgAEy8vLwQQCAAbAwMLB8MAWAgAi6'
-              'p71xevf7dns1ObS6tLr0uPS6tvj0ubf7d_q2-vY6tnu2RcCAA_Lyo6OhNny1YnxwqaBqo0QAgAByxMCABnL3t7'
-              'etsK2xvzT_Iztg63Prsej1vib9Jm2BgIAKMvLy4R7hHupqamt6urq6CUlJSCAgICDBwcHAqKioqG8vLy4_____'
-              'bwIAgAg3N_n5lhYWEYpWThLOBVlDWIHaQB4VTlQI1d6FnkedxkHAgAEy8vLywwCAB_TNjY2NhAYTA1DBFYXWgVa'
-              'ClkJVmI9YhdkAXM9XDFUBwIABMvLy8sIAgAJy8g3N3BwcFwfDQIAHcvL-vXtufi28aPir_Cv_6z8o5fIl-KR9Ib'
-              'IqcShDQIAHcvL8ExUAEEPSBpbFkkWRhVFGi5xLlsoTT9xEH0YDAIAH9M2NjY2dq76u_Wy4KHss-y877_g1IvUod'
-              'K3xYvqh-IMAgAf0zY2NjZ-cCRlK2w-fzJtMmIxYT4KVQp_DGkbVTRZPAwCAB_TNjY2Nn-azo_BhtSV2IfYiNuL1O'
-              'C_4JXmg_G_3rPWDAIAH9M2NjY2fVAERQtMHl8STRJCEUEeKnUqXyxJO3UUeRwIAgAh09BfX7GxseHuuvu18qDhrPO'
-              's_K__oJTLlOSF9oXyne-LDQIAHcvLmJSM2JnXkMKDzpHOns2dwvap9obnlOeQ_43pCAIAINzY4uIKCgpdwK7Lv9uyw'
-              'ar1heSX5LvXuN-22IfhjvyRDQIAHcvLkGx0IGEvaDp7Nmk2ZjVlOg5RDn4fbB9oB3URDQIAHcvLrOnxpeSq7b_-s'
-              '-yz47Dgv4vUi_ua6ZrtgvCUDQIAHcvLS7au-rv1suCh7LPsvO-_4NSL1KTFtsWy3a_L',
+        'dv': 'MDExAAoASAALAzYAJAAAAF00AAgCACCGhRkY8fHxh3gWcwdjCnkSTT1cL1wDbwBnDmA_WTZEKQwCAB-J6enp6dbfi8qEw5HQncKdzZ7OkaX6pdCjxrT6m_aTBwIABJGRkZEMAgAfievr6-vXPGgpZyByM34hfi59LXJGGUYzQCVXGXgVcAwCAB-J6urq6tb8qOmn4LLzvuG-7r3tsobZhvOA5ZfZuNWwCAIAIYmNGxo8PDwK-Kzto-S297rluuq56baC3YL3hOGT3bzRtA0CAB2Rkafn_6vqpOOx8L3ive2-7rGF2oXwg-aU2rvWswgCAAmRk0RGX19fbvAHAgAEkZGRkQkCABSRkkBCbGxsbGxDJSQnhYVpaT09KQgCAAmRlQkImZmZtb8HAgAEkZGRkQYCACiRkZEyMjIyMjIyN7i4uLsuLi4ri4uLiAwMDAmpqamq9vb281NTU1GWFwIAGJCU5ub1mrbYg9Oj_tK82a6O4LvKuufLpRYCACOzx6ycsoO2hLeFsoqyhbWEsYW0g7GDsoe3gLeAuY-4gbGFvAQCAAaTk5GQpJEFAgAEkZGRnQECAAaRk5ODju4VAgAIkZGQz8FtfgcQAgABkRMCABqRh4eH75vvn-zW-damx6mH5YTtifzSsd6znAcCAASRkZGRCQIAEpeSBQT8_Pz8_OGgoM203KjFqQcCAASRkZGRCQIAEpeSCQpOTk5OTmgoKEU8VCBNIQ0CAAWRkb7Kyg0CAAWRkb56egkCACSJjamokZGRkZGnkJDEhcuM3p_SjdKC0YHe6rXqn-yJ-7XUudwMAgAfiejo6OjTkcWEyo3fntOM04PQgN_rtOue7Yj6tNW43QcCAASRkZGRBwIABJGRkZEMAgAfie7u7u7TKX08cjVnJms0aztoOGdTDFMmVTBCDG0AZQ0CAB2RkdiNlcGAzonbmteI14fUhNvvsO-a6Yz-sNG82Q0CAB2Rkdixqf288rXnpuu067vouOfTjNOjwrHCtdqozAgCACOLj4yNDg4OcRhMDUMEVhdaBVoKWQlWYj1iFHEDagx1Nlk9WAkCACaLiGFgFhYWFhaW-Pis7aPktve65brquem2gt2C9JHjiuyV1rnduA',
         'callback': 'parent.'+callback
     #     bd__cbs__a59usm
     #     bd__pcbs__kw7m3d
@@ -156,6 +144,13 @@ def login(token, gid, callback, rsakey, username, password):
     output_html(resp.text, 'login_baidussssssss.html')
     if 'err_no=0' in resp.text:
         print('登录成功')
+        print(resp.text)
+        # pan_first_url = 'https://pan.baidu.com/disk/home?errno=0&errmsg=Auth%20Login%20Sucess&&bduss=&ssnerror=0#list/path=%2F&vmode=list'
+        pan_first_url = 'https://www.baidu.com'
+        # resp = session.post(url='https://passport.baidu.com/v2/api/?login', data=post_data, headers=headers)
+        resp = session.post(url=pan_first_url, data=post_data, headers=headers)
+        resp.encoding = 'utf-8'
+        output_html(resp.text, 'home_pan_baidu.html')
     else:
         print('登录失败')
 
