@@ -5,6 +5,7 @@ import requests
 import execjs
 import rsa
 import base64
+import http.cookiejar as cookielib
 
 js_path = 'login.js'
 headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/537.36 '
@@ -14,6 +15,12 @@ headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleW
 # 全局的session
 session = requests.session()
 session.get('https://pan.baidu.com', headers=headers)
+session.cookies = cookielib.LWPCookieJar('../sessions/baidu_pan_cookie')
+try:
+    session.cookies.load('../sessions/baidu_pan_cookie')
+except:
+    print('have not generated the cookies!')
+    pass
 
 def output_html(cntnt, name):
     path1 = '../others/'
@@ -67,8 +74,8 @@ def get_token(gid, callback):
         # 如果json字符串中带有单引号，会解析出错，只有统一成双引号才可以正确的解析
         #data = eval(re.search(r'.*?\((.*)\)', resp.text).group(1))
         data = json.loads(re.search(r'.*?\((.*)\)', resp.text).group(1).replace("'", '"'))
-        print(resp.text)
-        print(data)
+        print('Please check token json in the token.json')
+        output_html(resp.text, 'token.json')
         return data.get('data').get('token')
     else:
         print('获取token失败')
@@ -131,8 +138,8 @@ def login(token, gid, callback, rsakey, username, password):
         'crypttype': 12,
         'ppui_logintime': 33554,
         'countrycode': '',
-        'dv': 'MDExAAoASAALAzYAJAAAAF00AAgCACCGhRkY8fHxh3gWcwdjCnkSTT1cL1wDbwBnDmA_WTZEKQwCAB-J6enp6dbfi8qEw5HQncKdzZ7OkaX6pdCjxrT6m_aTBwIABJGRkZEMAgAfievr6-vXPGgpZyByM34hfi59LXJGGUYzQCVXGXgVcAwCAB-J6urq6tb8qOmn4LLzvuG-7r3tsobZhvOA5ZfZuNWwCAIAIYmNGxo8PDwK-Kzto-S297rluuq56baC3YL3hOGT3bzRtA0CAB2Rkafn_6vqpOOx8L3ive2-7rGF2oXwg-aU2rvWswgCAAmRk0RGX19fbvAHAgAEkZGRkQkCABSRkkBCbGxsbGxDJSQnhYVpaT09KQgCAAmRlQkImZmZtb8HAgAEkZGRkQYCACiRkZEyMjIyMjIyN7i4uLsuLi4ri4uLiAwMDAmpqamq9vb281NTU1GWFwIAGJCU5ub1mrbYg9Oj_tK82a6O4LvKuufLpRYCACOzx6ycsoO2hLeFsoqyhbWEsYW0g7GDsoe3gLeAuY-4gbGFvAQCAAaTk5GQpJEFAgAEkZGRnQECAAaRk5ODju4VAgAIkZGQz8FtfgcQAgABkRMCABqRh4eH75vvn-zW-damx6mH5YTtifzSsd6znAcCAASRkZGRCQIAEpeSBQT8_Pz8_OGgoM203KjFqQcCAASRkZGRCQIAEpeSCQpOTk5OTmgoKEU8VCBNIQ0CAAWRkb7Kyg0CAAWRkb56egkCACSJjamokZGRkZGnkJDEhcuM3p_SjdKC0YHe6rXqn-yJ-7XUudwMAgAfiejo6OjTkcWEyo3fntOM04PQgN_rtOue7Yj6tNW43QcCAASRkZGRBwIABJGRkZEMAgAfie7u7u7TKX08cjVnJms0aztoOGdTDFMmVTBCDG0AZQ0CAB2RkdiNlcGAzonbmteI14fUhNvvsO-a6Yz-sNG82Q0CAB2Rkdixqf288rXnpuu067vouOfTjNOjwrHCtdqozAgCACOLj4yNDg4OcRhMDUMEVhdaBVoKWQlWYj1iFHEDagx1Nlk9WAkCACaLiGFgFhYWFhaW-Pis7aPktve65brquem2gt2C9JHjiuyV1rnduA',
-        'callback': 'parent.'+callback
+        'dv': '',
+        'callback': 'parent.'+ callback
     #     bd__cbs__a59usm
     #     bd__pcbs__kw7m3d
     }
@@ -145,37 +152,60 @@ def login(token, gid, callback, rsakey, username, password):
     if 'err_no=0' in resp.text:
         print('登录成功')
         print(resp.text)
-        # pan_first_url = 'https://pan.baidu.com/disk/home?errno=0&errmsg=Auth%20Login%20Sucess&&bduss=&ssnerror=0#list/path=%2F&vmode=list'
-        pan_first_url = 'https://www.baidu.com'
-        # resp = session.post(url='https://passport.baidu.com/v2/api/?login', data=post_data, headers=headers)
-        resp = session.post(url=pan_first_url, data=post_data, headers=headers)
-        resp.encoding = 'utf-8'
-        output_html(resp.text, 'home_pan_baidu.html')
+        session.cookies.save()
     else:
+        if 'err_no=257' in resp.text:
+            # print('Verify code is needed!')
+            print('Maybe params dv need to change!')
         print('登录失败')
 
+def is_login():
+    # headers.update()
+    url = 'http://www.baidu.com'
+    rsp = session.get(url=url, headers=headers)
+    print('check the output html')
+    output_html(rsp.text,'baidu_home.html')
+    try:
+        print('in try excpt')
+        username = re.findall('<span class=user-name>(.*?)</span>', rsp.text)[0]
+        print('username is ' + username)
+    except Exception as e:
+        print('Fail to find the username, please contact the producer!')
+        return False
+    return True
+
+def browse_pan():
+    pan_url = 'https://pan.baidu.com/'
+    pan_url = 'https://pan.baidu.com/disk/home?errno=0&errmsg=Auth%20Login%20Sucess&&bduss=&ssnerror=0#list/path=%2F&vmode=list'
+    pan_url = 'https://pan.baidu.com/disk/home'
+    headers.update(dict(Referer='http://pan.baidu.com/', Accept='*/*', Connection='keep-alive', Host='pan.baidu.com'))
+    rsp = session.get(url=pan_url, headers=headers)
+    rsp.encoding = 'utf-8'
+    print('check the output html')
+    output_html(rsp.text,'baidu_pan_home.html')
+
 if __name__ == '__main__':
-    print('Input username and password!')
-    name = '13270828661'
-    passwd = '0513865219hjj'
-    # name = input('请输入用户名:\n')
-    # passwd = input('请输入密码:\n')
+    if is_login():
+        print('Cookie load success!')
+        browse_pan()
+        pass
+    else:
+        print('Input username and password!')
+        # name = '13270828661'
+        # passwd = '05138xxxxxx'
+        name = input('请输入用户名:\n')
+        passwd = input('请输入密码:\n')
 
-    cur_gid = get_gid()
-    print('1 cur_gid = ' + cur_gid)
+        cur_gid = get_gid()
+        print('1 cur_gid = ' + cur_gid)
 
-    cur_callback = get_callback()
-    print('2 callback = ' + cur_callback)
+        cur_callback = get_callback()
+        print('2 callback = ' + cur_callback)
 
-    cur_token = get_token(cur_gid, cur_callback)
-    print('3 cur_token = ' + cur_token + '\n        via cur_gid & cur_callback')
+        cur_token = get_token(cur_gid, cur_callback)
+        print('3 cur_token = ' + cur_token + '\n        via cur_gid & cur_callback')
 
-    cur_pubkey, cur_key = get_rsa_key(cur_token, cur_gid, cur_callback)
-    print('4 cur_pubkey = ' + cur_pubkey + '& cur_key = ' + cur_key + '\n       via cur_gid, cur_callback & cur_token')
-    encript_pass = encript_password(passwd, cur_pubkey)
-    login(cur_token, cur_gid, get_callback().replace('cbs', 'pcbs'), cur_key, name, encript_pass)
-
-    ss = session.get('http://pan.baidu.com/disk/home', headers=headers)
-    ss.encoding = 'utf-8'
-    output_html(ss.text, 'another_baidu.html')
-    # print(ss.text)
+        cur_pubkey, cur_key = get_rsa_key(cur_token, cur_gid, cur_callback)
+        print('4 cur_pubkey = ' + cur_pubkey + '& cur_key = ' + cur_key + '\n       via cur_gid, cur_callback & cur_token')
+        encript_pass = encript_password(passwd, cur_pubkey)
+        login(cur_token, cur_gid, get_callback().replace('cbs', 'pcbs'), cur_key, name, encript_pass)
