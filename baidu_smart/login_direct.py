@@ -23,6 +23,7 @@ except:
     pass
 
 def output_html(cntnt, name):
+    name = time.strftime('%Y%m%d%H%M',time.localtime(time.time())) + name
     path1 = '../others/'
     path2 = './others/'
     try:
