@@ -139,7 +139,7 @@ def login(token, gid, callback, rsakey, username, password):
         'crypttype': 12,
         'ppui_logintime': 33554,
         'countrycode': '',
-        'dv': '',
+        'dv': 'MDExAAoAgwALAnEAGgAAAF00AA0CAB2RkYYFHUkIRgFTEl8AXw9cDFNnOGcXdgV2AW4ceA0CAB2RkYbt9aHgrum7-rfot-e05LuP0I__nu2e6Yb0kA0CAB2RkYbk_Kjpp-Cy877hvu697bKG2YbzgOWX2bjVsAcCAASRkZGRDAIAH4m7u7u7so3ZmNaRw4LPkM-fzJzD96j3gvGU5qjJpMEMAgAfibq6urqzk8eGyI_dnNGO0YHSgt3ptumc74r4tte63wwCAB-JuLi4uLBmMnM9eihpJHskdCd3KBxDHGkafw1DIk8qEwIAGpGHh4fvm--f7Nb51qbHqYflhO2J_NKx3rOcFwIAB5CS39_dnv8EAgAGk5ORkKSRBQIABJGRkZ0BAgAGkZOTg47uFQIACJGRkM_7bccbFgIAIrDEr5-xgrOKuomxh7GCu4KyhbyJv467i7OHtoO7irqIuoMQAgABkQYCACiRkZEUFBQUFBQUEVRUVFabm5ueyMjIy8vLy86YmJiaQkJCRxERERNwBwIABJGRkZEIAgAhiYpNTZeXl5W_66rko_Gw_aL9rf6u8cWaxbDDptSa-5bzCQIAJImKQ0OSkpKSkpotLXk4djFjIm8wbz9sPGNXCFciUTRGCGkEYQcCAASRkZGRDQIAHZGRmVxEEFEfWApLBlkGVgVVCj5hPks4XS9hAG0IBwIABJGRkZEHAgAEkZGRkQwCAB-Jvr6-vrPGktOd2ojJhNuE1IfXiLzjvMm6363jgu-KDAIAH4m5ubm5t38raiRjMXA9Yj1tPm4xBVoFcANmFFo7VjMNAgAdkZGG_-ez8rz7qeil-qX1pvapncKd7Yz_jPuU5oI',
         'callback': 'parent.'+ callback
     #     bd__cbs__a59usm
     #     bd__pcbs__kw7m3d
@@ -190,8 +190,25 @@ def browse_pan():
     output_html(rsp.text,'baidu_pan_home.html')
 
 def get_json():
+    post_data = {
+        'dir': '%2F',
+        'bdstoken': '2c1ec15c52758f8bb011a5b6a2c48a18',
+        'logid': 'MTUwODQxMzE1NDYyNTAuNTUwMjE5NzA5Mjg2NDY2Mg==',
+        'num': '100',
+        'order': 'time',
+        'desc': '1',
+        'clienttype': '0',
+        'showempty': '0',
+        'web': '1',
+        'page': '1',
+        'channel': 'chunlei',
+        'app_id': '250528'
+    }
     # First page
-    pan_url = ''
+    jsn_url = 'https://pan.baidu.com/api/list?dir=%2F&bdstoken=2c1ec15c52758f8bb011a5b6a2c48a18&logid=MTUwODQxMzE1NDYyNTAuNTUwMjE5NzA5Mjg2NDY2Mg==&num=100&order=time&desc=1&clienttype=0&showempty=0&web=1&page=1&channel=chunlei&web=1&app_id=250528'
+    jsn_url = 'https://pan.baidu.com/api/list'
+    rsp = session.post(url=jsn_url, headers=headers, data=post_data)
+    print(rsp.text)
     pass
 
 if __name__ == '__main__':
@@ -202,10 +219,11 @@ if __name__ == '__main__':
         pass
     else:
         print('Input username and password!')
-        # name = '13270828661'
+        name = '13270828661'
         # passwd = '05138xxxxxx'
-        name = input('请输入用户名:\n')
-        passwd = input('请输入密码:\n')
+        passwd = '0513865219hjj'
+        # name = input('请输入用户名:\n')
+        # passwd = input('请输入密码:\n')
 
         cur_gid = get_gid()
         print('1 cur_gid = ' + cur_gid)
