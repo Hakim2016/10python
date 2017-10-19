@@ -179,16 +179,23 @@ def browse_pan():
     pan_url = 'https://pan.baidu.com/'
     pan_url = 'https://pan.baidu.com/disk/home?errno=0&errmsg=Auth%20Login%20Sucess&&bduss=&ssnerror=0#list/path=%2F&vmode=list'
     pan_url = 'https://pan.baidu.com/disk/home'
+
     headers.update(dict(Referer='http://pan.baidu.com/', Accept='*/*', Connection='keep-alive', Host='pan.baidu.com'))
     rsp = session.get(url=pan_url, headers=headers)
     rsp.encoding = 'utf-8'
     print('check the output html')
     output_html(rsp.text,'baidu_pan_home.html')
 
+def get_json():
+    # First page
+    pan_url = ''
+    pass
+
 if __name__ == '__main__':
     if is_login():
         print('Cookie load success!')
         browse_pan()
+        get_json()
         pass
     else:
         print('Input username and password!')
