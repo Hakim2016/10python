@@ -159,6 +159,9 @@ def login(token, gid, callback, rsakey, username, password):
             # print('Verify code is needed!')
             print('Maybe params dv need to change!')
         print('登录失败')
+        
+def get_json():
+    pass
 
 def is_login():
     # headers.update()
