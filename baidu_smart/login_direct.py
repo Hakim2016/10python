@@ -139,7 +139,7 @@ def login(token, gid, callback, rsakey, username, password):
         'crypttype': 12,
         'ppui_logintime': 33554,
         'countrycode': '',
-        'dv': 'MDExAAoAgwALAnEAGgAAAF00AA0CAB2RkYYFHUkIRgFTEl8AXw9cDFNnOGcXdgV2AW4ceA0CAB2RkYbt9aHgrum7-rfot-e05LuP0I__nu2e6Yb0kA0CAB2RkYbk_Kjpp-Cy877hvu697bKG2YbzgOWX2bjVsAcCAASRkZGRDAIAH4m7u7u7so3ZmNaRw4LPkM-fzJzD96j3gvGU5qjJpMEMAgAfibq6urqzk8eGyI_dnNGO0YHSgt3ptumc74r4tte63wwCAB-JuLi4uLBmMnM9eihpJHskdCd3KBxDHGkafw1DIk8qEwIAGpGHh4fvm--f7Nb51qbHqYflhO2J_NKx3rOcFwIAB5CS39_dnv8EAgAGk5ORkKSRBQIABJGRkZ0BAgAGkZOTg47uFQIACJGRkM_7bccbFgIAIrDEr5-xgrOKuomxh7GCu4KyhbyJv467i7OHtoO7irqIuoMQAgABkQYCACiRkZEUFBQUFBQUEVRUVFabm5ueyMjIy8vLy86YmJiaQkJCRxERERNwBwIABJGRkZEIAgAhiYpNTZeXl5W_66rko_Gw_aL9rf6u8cWaxbDDptSa-5bzCQIAJImKQ0OSkpKSkpotLXk4djFjIm8wbz9sPGNXCFciUTRGCGkEYQcCAASRkZGRDQIAHZGRmVxEEFEfWApLBlkGVgVVCj5hPks4XS9hAG0IBwIABJGRkZEHAgAEkZGRkQwCAB-Jvr6-vrPGktOd2ojJhNuE1IfXiLzjvMm6363jgu-KDAIAH4m5ubm5t38raiRjMXA9Yj1tPm4xBVoFcANmFFo7VjMNAgAdkZGG_-ez8rz7qeil-qX1pvapncKd7Yz_jPuU5oI',
+        'dv': 'MDExAAoA3QALAtoAJAAAAF00AAwCAB-JbGxsbNDRhcSKzZ_ek8yTw5DAn6v0q96tyLr0lfidBwIABJGRkZEMAgAfiWxsbGzVNWEgbil7Oncodyd0JHtPEE86SSxeEHEceQwCAB-JbGxsbNWRxYTKjd-e04zTg9CA3-u0657tiPq01bjdBwIABJGRkZENAgAdkZEiFQ1ZGFYRQwJPEE8fTBxDdyh3AnEUZihJJEENAgAFkZEyEREIAgAghoVTUvz8_GGo2LnKuZTkjOOG6IH51LjRotb7l_if9pgIAgAJkZDGxMrKyke2CQIAEpeS_f0XFxcXFyLk5InwmOyB7QkCAAyRlJKTtra2traDMTEHAgAEkZGRkQcCAASRkZGREwIAGpGHh4fvm--f7Nb51qbHqYflhO2J_NKx3rOcFgIAIrDEr5-xib6HtIawgrqDtoe-iL6Jv467i7OEsIG4irqOu4gVAgAIkZGQz4eBN9ABAgAGkZOTg47uBQIABJGRkZ0EAgAGk5ORkKSRFwIAC5OT09PVu5vvtO6BEAIAAZEGAgAokZGRFBQUFD09PTheXl5ckZGRlDQ0NDezs7O2FhYWFUlJSUw7Ozs53g0CAAWRkYWDgwkCABidn0pKZWVlZWVxXl4yXTpTPRB4HXwYfQ8NAgAFkZGFx8cHAgAEkZGRkQcCAASRkZGRCQIAJYiLKSg7Ozs7Ow7Z2bfSpsKr2LPsne-M44fivdG-2bDegeeI-pcIAgAJkZV0dhcXF4-bCQIAI4aFUVCKioqKiirf36_Ovc7jk_uU8Z_2jqPPptWhjOCP6IHvDQIABZGRM56eCAIAIYmKTEyGhoYuDlobVRJAAUwTTBxPH0B0K3QBchdlK0onQgwCAB-JbGxsbNqazo_BhtSV2IfYiNuL1OC_4JXmg_G_3rPWBwIABJGRkZEMAgAfiWxsbGzWHEgJRwBSE14BXg5dDVJmOWYTYAV3OVg1UAgCAAmRlN_fKSkp_us',
         'callback': 'parent.'+ callback
     #     bd__cbs__a59usm
     #     bd__pcbs__kw7m3d
@@ -208,14 +208,67 @@ def get_json():
     jsn_url = 'https://pan.baidu.com/api/list?dir=%2F&bdstoken=2c1ec15c52758f8bb011a5b6a2c48a18&logid=MTUwODQxMzE1NDYyNTAuNTUwMjE5NzA5Mjg2NDY2Mg==&num=100&order=time&desc=1&clienttype=0&showempty=0&web=1&page=1&channel=chunlei&web=1&app_id=250528'
     jsn_url = 'https://pan.baidu.com/api/list'
     rsp = session.post(url=jsn_url, headers=headers, data=post_data)
-    print(rsp.text)
+    # print(rsp.text)
     pass
+
+def write2File(result): 
+    with open('directories_baidu_pan','w') as f:
+        f.write(result)
+        f.write('\n')
+        f.close()
+
+def getList(path, token):  
+    payload = {
+        'order': 'time',
+        'desc': '1',
+        'showempty': '0',
+        'web': '1',
+        'page': '1',
+        'num': '100',
+        'dir': path,
+        't': '0.844042636686936',  
+        'bdstoken': token,
+        'channel': 'chunlei',  
+        'clienttype': '0',
+        'web': '1',  
+        'app_id': '250528'
+    }  
+    path_cnt = session.get("http://pan.baidu.com/api/list", params=payload ,verify=False)
+    print(path_cnt.text)
+    # printself.Path.text  
+    # mJson = list(json.loads(path_cnt.text)['list'])  
+    # for str in mJson:  
+    #     if str['isdir'] == 0:  
+    #         try:  
+    #             printstr['server_filename'].decode('utf-8')  
+    #         except:  
+    #             printstr['server_filename'].decode('gbk')  
+    #         write2File(str['server_filename'])  
+    #     elif str['isdir'] == 1:  
+    #         try:  
+    #             print(str['path']).decode('utf-8')  
+    #         except:  
+    #             print(str['path']).decode('gbk')  
+    #         write2File(str['path'])  
+    #         path = str['path'] + '/'  
+    #         getList(path) 
+
+def get3Params():
+    cur_gid = get_gid()
+    print('1 cur_gid = ' + cur_gid)
+
+    cur_callback = get_callback()
+    print('2 callback = ' + cur_callback)
+
+    cur_token = get_token(cur_gid, cur_callback)
+    print('3 cur_token = ' + cur_token + '\n        via cur_gid & cur_callback')
 
 if __name__ == '__main__':
     if is_login():
         print('Cookie load success!')
         browse_pan()
         get_json()
+        getList(path, token)
         pass
     else:
         print('Input username and password!')
