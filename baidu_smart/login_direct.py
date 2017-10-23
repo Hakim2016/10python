@@ -139,7 +139,7 @@ def login(token, gid, callback, rsakey, username, password):
         'crypttype': 12,
         'ppui_logintime': 33554,
         'countrycode': '',
-        'dv': 'MDExAAoA3QALAtoAJAAAAF00AAwCAB-JbGxsbNDRhcSKzZ_ek8yTw5DAn6v0q96tyLr0lfidBwIABJGRkZEMAgAfiWxsbGzVNWEgbil7Oncodyd0JHtPEE86SSxeEHEceQwCAB-JbGxsbNWRxYTKjd-e04zTg9CA3-u0657tiPq01bjdBwIABJGRkZENAgAdkZEiFQ1ZGFYRQwJPEE8fTBxDdyh3AnEUZihJJEENAgAFkZEyEREIAgAghoVTUvz8_GGo2LnKuZTkjOOG6IH51LjRotb7l_if9pgIAgAJkZDGxMrKyke2CQIAEpeS_f0XFxcXFyLk5InwmOyB7QkCAAyRlJKTtra2traDMTEHAgAEkZGRkQcCAASRkZGREwIAGpGHh4fvm--f7Nb51qbHqYflhO2J_NKx3rOcFgIAIrDEr5-xib6HtIawgrqDtoe-iL6Jv467i7OEsIG4irqOu4gVAgAIkZGQz4eBN9ABAgAGkZOTg47uBQIABJGRkZ0EAgAGk5ORkKSRFwIAC5OT09PVu5vvtO6BEAIAAZEGAgAokZGRFBQUFD09PTheXl5ckZGRlDQ0NDezs7O2FhYWFUlJSUw7Ozs53g0CAAWRkYWDgwkCABidn0pKZWVlZWVxXl4yXTpTPRB4HXwYfQ8NAgAFkZGFx8cHAgAEkZGRkQcCAASRkZGRCQIAJYiLKSg7Ozs7Ow7Z2bfSpsKr2LPsne-M44fivdG-2bDegeeI-pcIAgAJkZV0dhcXF4-bCQIAI4aFUVCKioqKiirf36_Ovc7jk_uU8Z_2jqPPptWhjOCP6IHvDQIABZGRM56eCAIAIYmKTEyGhoYuDlobVRJAAUwTTBxPH0B0K3QBchdlK0onQgwCAB-JbGxsbNqazo_BhtSV2IfYiNuL1OC_4JXmg_G_3rPWBwIABJGRkZEMAgAfiWxsbGzWHEgJRwBSE14BXg5dDVJmOWYTYAV3OVg1UAgCAAmRlN_fKSkp_us',
+        'dv': 'MDExAAoA-QALA6YAJAAAAF00AAkCACKHhEZHCAgICAhGi4vfntCXxYTJlsmZyprF8a7xgveV-JHlCQIAJImKV1e6urq6uoLY2IzNg8SW15rFmsqZyZai_aLSs8CzxKvZvQgCACGJimtrpaWllrjsreOk9rf6pfqq-an2wp3Ct8Sh0538kfQHAgAEkZGRkQwCAB-Jvb29vZhuOns1ciBhLHMsfC9_IBRLFGESdwVLKkciDQIAHZGRs2F5LWwiZTd2O2Q7azhoNwNcA3YFYBJcPVA1CQIAJImKX1_r6-vr68l3dyNiLGs5eDVqNWU2ZjkNUg14C24cUjNeOwcCAASRkZGRDQIAHZGRitTMmNmX0ILDjtGO3o3dgrbptsOw1afpiOWADQIAHZGRmAMbTw5AB1UUWQZZCVoKVWE-YRRnAnA-XzJXBwIABJGRkZENAgAdkZGWQloOTwFGFFUYRxhIG0sUIH8gVSZDMX8ecxYJAgAkiY2Li0REREREQ___q-qk47HwveK97b7usYXahfCD5pTau9azBwIABJGRkZEMAgALle7u7u7pTCJXO1cGAgAokZGRFBQUFBQUFBFUVFRWm5ubnsjIyMvLy8vOmJiYmkJCQkcRERETcBMCABqRh4eH75vvn-zW-damx6mH5YTtifzSsd6znBACAAGRBAIABpOTkZCkkRUCAAiRkZDPhcHk7AUCAASRkZGdAQIABpGTk4OO7hYCACW1waqatIS0h7SNtIKwgbWDsYWxiLyPvoq7jr6GsYa_irqKvYWxFwIADpGRhoaP6MHg3eCm0vuVBwIABJGRkZEHAgAEkZGRkQwCAB-JuLi4uLG04KHvqPq79qn2pvWl-s6RzrvIrd-R8J34CAIAHYWGHx_j4-Psuu6v4ab0tfin-Kj7q_TAn8CmybvWCQIAIYSHLy--vr6-vqXMzJjZl9CCw47Rjt6N3YK26bbTodO8zg0CAB2RkYry6r7_sfak5aj3qPir-6SQz5DllvOBz67DpggCACWNjj8_ra2tsdKGx4nOnN2Qz5DAk8OcqPeozb_NotCH9ZTklPGDBwIABJGRkZEMAgAfiby8vLyaeCxtI2Q2dzplOmo5aTYCXQJ3BGETXTxRNAgCACGJilxc6urqwvej4qzrufi16rXltua5jdKN-IvunNKz3rsMAgAfibCwsLCZ8qbnqe68_bDvsOCz47yI14j9juuZ17bbvggCACGJimtrvLy8kjxoKWcgcjN-IX4ufS1yRhlGNlckVyBPPVk',
         'callback': 'parent.'+ callback
     #     bd__cbs__a59usm
     #     bd__pcbs__kw7m3d
@@ -219,7 +219,7 @@ def write2File(result):
 
 def getList(path, token):  
     payload = {
-        'order': 'time',
+        'order': 'name',
         'desc': '1',
         'showempty': '0',
         'web': '1',
@@ -232,9 +232,13 @@ def getList(path, token):
         'clienttype': '0',
         'web': '1',  
         'app_id': '250528'
-    }  
-    path_cnt = session.get("http://pan.baidu.com/api/list", params=payload ,verify=False)
-    print(path_cnt.text)
+    }
+    # https://pan.baidu.com/api/list
+    headers.update(dict(Referer='https://pan.baidu.com/disk/home?', Accept='*/*', Connection='keep-alive', Host='pan.baidu.com'))
+    path_cnt = session.post("http://pan.baidu.com/api/list", params=payload ,headers=headers,verify=False)
+    path_cnt.encoding = 'utf8'
+    output_html(path_cnt.text, 'baidu_pan_list.html')
+    # print(path_cnt.text)
     # printself.Path.text  
     # mJson = list(json.loads(path_cnt.text)['list'])  
     # for str in mJson:  
@@ -263,12 +267,15 @@ def get3Params():
     cur_token = get_token(cur_gid, cur_callback)
     print('3 cur_token = ' + cur_token + '\n        via cur_gid & cur_callback')
 
+    return (cur_gid, cur_callback, cur_token)
+
 if __name__ == '__main__':
     if is_login():
+        (cur_gid, cur_callback, cur_token) = get3Params()
         print('Cookie load success!')
         browse_pan()
         get_json()
-        getList(path, token)
+        getList(u'/', cur_token)
         pass
     else:
         print('Input username and password!')
@@ -278,16 +285,10 @@ if __name__ == '__main__':
         # name = input('请输入用户名:\n')
         # passwd = input('请输入密码:\n')
 
-        cur_gid = get_gid()
-        print('1 cur_gid = ' + cur_gid)
-
-        cur_callback = get_callback()
-        print('2 callback = ' + cur_callback)
-
-        cur_token = get_token(cur_gid, cur_callback)
-        print('3 cur_token = ' + cur_token + '\n        via cur_gid & cur_callback')
+        (cur_gid, cur_callback, cur_token) = get3Params()
 
         cur_pubkey, cur_key = get_rsa_key(cur_token, cur_gid, cur_callback)
         print('4 cur_pubkey = ' + cur_pubkey + '& cur_key = ' + cur_key + '\n       via cur_gid, cur_callback & cur_token')
         encript_pass = encript_password(passwd, cur_pubkey)
         login(cur_token, cur_gid, get_callback().replace('cbs', 'pcbs'), cur_key, name, encript_pass)
+        getList(u'/', cur_token)
