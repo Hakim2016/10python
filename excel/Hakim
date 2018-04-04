@@ -1,0 +1,7 @@
+05-Apr-2018
+1.intsall the pywin32
+    has 2 32/64 version install according to python version
+    download url:https://github.com/mhammond/pywin32/releases
+2.pip intsall xlwings
+3.get start with http://docs.xlwings.org/en/stable/quickstart.html
+4.refer to https://zhuanlan.zhihu.com/p/25810634
