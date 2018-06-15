@@ -23,7 +23,7 @@ except:
     pass
 
 def output_html(cntnt, name):
-    name = time.strftime('%Y%m%d%H%M',time.localtime(time.time())) + name
+    name = time.strftime('%Y-%m-%d-%H%M%S',time.localtime(time.time())) + name
     path1 = '../others/'
     path2 = './others/'
     try:
@@ -139,7 +139,7 @@ def login(token, gid, callback, rsakey, username, password):
         'crypttype': 12,
         'ppui_logintime': 33554,
         'countrycode': '',
-        'dv': 'MDExAAoA-QALA6YAJAAAAF00AAkCACKHhEZHCAgICAhGi4vfntCXxYTJlsmZyprF8a7xgveV-JHlCQIAJImKV1e6urq6uoLY2IzNg8SW15rFmsqZyZai_aLSs8CzxKvZvQgCACGJimtrpaWllrjsreOk9rf6pfqq-an2wp3Ct8Sh0538kfQHAgAEkZGRkQwCAB-Jvb29vZhuOns1ciBhLHMsfC9_IBRLFGESdwVLKkciDQIAHZGRs2F5LWwiZTd2O2Q7azhoNwNcA3YFYBJcPVA1CQIAJImKX1_r6-vr68l3dyNiLGs5eDVqNWU2ZjkNUg14C24cUjNeOwcCAASRkZGRDQIAHZGRitTMmNmX0ILDjtGO3o3dgrbptsOw1afpiOWADQIAHZGRmAMbTw5AB1UUWQZZCVoKVWE-YRRnAnA-XzJXBwIABJGRkZENAgAdkZGWQloOTwFGFFUYRxhIG0sUIH8gVSZDMX8ecxYJAgAkiY2Li0REREREQ___q-qk47HwveK97b7usYXahfCD5pTau9azBwIABJGRkZEMAgALle7u7u7pTCJXO1cGAgAokZGRFBQUFBQUFBFUVFRWm5ubnsjIyMvLy8vOmJiYmkJCQkcRERETcBMCABqRh4eH75vvn-zW-damx6mH5YTtifzSsd6znBACAAGRBAIABpOTkZCkkRUCAAiRkZDPhcHk7AUCAASRkZGdAQIABpGTk4OO7hYCACW1waqatIS0h7SNtIKwgbWDsYWxiLyPvoq7jr6GsYa_irqKvYWxFwIADpGRhoaP6MHg3eCm0vuVBwIABJGRkZEHAgAEkZGRkQwCAB-JuLi4uLG04KHvqPq79qn2pvWl-s6RzrvIrd-R8J34CAIAHYWGHx_j4-Psuu6v4ab0tfin-Kj7q_TAn8CmybvWCQIAIYSHLy--vr6-vqXMzJjZl9CCw47Rjt6N3YK26bbTodO8zg0CAB2RkYry6r7_sfak5aj3qPir-6SQz5DllvOBz67DpggCACWNjj8_ra2tsdKGx4nOnN2Qz5DAk8OcqPeozb_NotCH9ZTklPGDBwIABJGRkZEMAgAfiby8vLyaeCxtI2Q2dzplOmo5aTYCXQJ3BGETXTxRNAgCACGJilxc6urqwvej4qzrufi16rXltua5jdKN-IvunNKz3rsMAgAfibCwsLCZ8qbnqe68_bDvsOCz47yI14j9juuZ17bbvggCACGJimtrvLy8kjxoKWcgcjN-IX4ufS1yRhlGNlckVyBPPVk',
+        'dv': 'MDExAAoAbwALAzQAIQAAAF00AAgCACqwtLa3qqqq7aH1tPq9767jvOOz4LDv24TbttO-3LnLm_qJ-q3fvs6-26kNAgAdkZGslo7am9WSwIHMk8ycz5_A9Kv0hOWW5ZL9j-sHAgAEkZGRkQkCACSJjZWUk5OTk5OuubntrOKl97b7pPur-Kj3w5zDs9Kh0qXKuNwIAgAJkZWNjAcHBz6hDAIAH4m_v7-_mF4KSwVCEFEcQxxMH08QJHskUSJHNXsadxIHAgAEkZGRkQwCAB-Jvb29vZsseDl3MGIjbjFuPm09YlYJViNQNUcJaAVgBwIABJGRkZEMAgAfibu7u7ufXAhJB0ASUx5BHk4dTRImeSZTIEU3eRh1EAcCAASRkZGRDAIAH4ny8vLy_HMnZihvPXwxbjFhMmI9CVYJfA9qGFY3Wj8HAgAEkZGRkQkCACSJivT0Li4uLi4ub287ejRzIWAtci19Ln4hFUoVYBN2BEorRiMHAgAEkZGRkQYCACiRkZEICAgIVVVVUcHBwcMODg4Lq6urqCwsLCmJiYmK1tbW0nNzc3HmFwIAFJOTj4-A7rX0lciT_ab_kM3lp8bvFgIAI7PHrJyygrqNuoq6iriIsYm-i7-Pu4Oyh7ePt4a3gLKGv4-4BAIABpOTkZCkkQECAAaRk5ODju4FAgAEkZGRnRUCAAiRkZDPg6x08xACAAGREwIAGpGHh4fvm--f7Nb51qbHqYflhO2J_NKx3rOcDQIAHZGRkd7GktOd2ojJhNuE1IfXiLzjvMm6363jgu-KBwIABJGRkZENAgAdkZGD9u66-7XyoOGs86z8r_-glMuU4ZL3hcuqx6IIAgAVnZnw8MjIyN8DbwBnDmBNJUAhRSBSDQIAHZGRse_3o-Ks67n4teq15bbmuY3SjfiL7pzSs967CQIAJImNv79qampqakosLHg5dzBiI24xbj5tPWJWCVYjUDVHCWgFYAwCAB-JsbGxsZlNGVgWUQNCD1APXwxcAzdoN0IxVCZoCWQBDQIAHZGRrJ6G0pPdmsiJxJvElMeXyPyj_In6n-2jwq_KCQIAIoeDm5rMzMzMzIcYGEwNQwRWF1oFWgpZCVZiPWIRZAZrAnY',
         'callback': 'parent.'+ callback
     #     bd__cbs__a59usm
     #     bd__pcbs__kw7m3d
@@ -152,7 +152,7 @@ def login(token, gid, callback, rsakey, username, password):
     output_html(resp.text, 'login_baidussssssss.html')
     if 'err_no=0' in resp.text:
         print('登录成功')
-        print(resp.text)
+        # print(resp.text)
         session.cookies.save()
     else:
         if 'err_no=257' in resp.text:
@@ -160,9 +160,6 @@ def login(token, gid, callback, rsakey, username, password):
             print('Maybe params dv need to change!')
         print('登录失败')
         
-def get_json():
-    pass
-
 def is_login():
     # headers.update()
     url = 'http://www.baidu.com'
@@ -217,7 +214,7 @@ def write2File(result):
         f.write('\n')
         f.close()
 
-def getList(path, token):  
+def getList(path, token):
     payload = {
         'order': 'name',
         'desc': '1',
@@ -226,16 +223,18 @@ def getList(path, token):
         'page': '1',
         'num': '100',
         'dir': path,
-        't': '0.844042636686936',  
+        't': '0.023670486407354474',
         'bdstoken': token,
         'channel': 'chunlei',  
         'clienttype': '0',
         'web': '1',  
-        'app_id': '250528'
+        'app_id': '250528',
+        'logid':'MTUwODgxMjcxMzE4ODAuNzI2NjcwNjE1MTQyMjExMw=='
     }
+    print(payload)
     # https://pan.baidu.com/api/list
-    headers.update(dict(Referer='https://pan.baidu.com/disk/home?', Accept='*/*', Connection='keep-alive', Host='pan.baidu.com'))
-    path_cnt = session.post("http://pan.baidu.com/api/list", params=payload ,headers=headers,verify=False)
+    headers.update(dict(Referer='https://pan.baidu.com/disk/home', Accept='*/*', Connection='keep-alive', Host='pan.baidu.com'))
+    path_cnt = session.get("http://pan.baidu.com/api/list", params=payload ,headers=headers)''',verify=False'''
     path_cnt.encoding = 'utf8'
     output_html(path_cnt.text, 'baidu_pan_list.html')
     # print(path_cnt.text)
@@ -273,9 +272,7 @@ if __name__ == '__main__':
     if is_login():
         (cur_gid, cur_callback, cur_token) = get3Params()
         print('Cookie load success!')
-        browse_pan()
-        get_json()
-        getList(u'/', cur_token)
+        getList('/', cur_token)
         pass
     else:
         print('Input username and password!')
