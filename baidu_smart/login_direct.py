@@ -5,33 +5,53 @@ import requests
 import execjs
 import rsa
 import base64
+import os
 import http.cookiejar as cookielib
 
-js_path = 'login.js'
+js_path = './login.js'
 headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/537.36 '
                          '(KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36',
            }
 
+cookie_path = '../sessions/'
+
+if os.path.exists(cookie_path):
+    pass
+else:
+    print('this path need to create!')
+    cookie_path = ''
+    # os.makedirs(cookie_path)
+
 # 全局的session
 session = requests.session()
 session.get('https://pan.baidu.com', headers=headers)
-session.cookies = cookielib.LWPCookieJar('../sessions/baidu_pan_cookie')
+session.cookies = cookielib.LWPCookieJar(cookie_path + 'baidu_pan_cookie')
 try:
-    session.cookies.load('../sessions/baidu_pan_cookie')
+    session.cookies.load(cookie_path + 'baidu_pan_cookie')
 except:
     print('have not generated the cookies!')
     pass
 
 def output_html(cntnt, name):
+<<<<<<< HEAD
     name = time.strftime('%Y-%m-%d-%H%M%S',time.localtime(time.time())) + name
     path1 = '../others/'
     path2 = './others/'
+=======
+    name = time.strftime('%Y-%m-%d-%H%M',time.localtime(time.time())) + name
+    path = './others/'
+    if os.path.exists(path):
+        pass
+    else:
+        print('this path need to create!')
+        os.makedirs(path)
+
+>>>>>>> 208c3b878716403e6a17b08578ae55204b82f727
     try:
-        with open(path1 + name, 'w', encoding='utf-8') as f:
+        with open(path + name, 'w', encoding='utf-8') as f:
             f.write(cntnt)
     except:
-        with open(path2 + name, 'w', encoding='utf-8') as f:
-            f.write(cntnt)
+        print('Write error')
 
 def _get_runntime():
     """
@@ -276,11 +296,9 @@ if __name__ == '__main__':
         pass
     else:
         print('Input username and password!')
-        name = '13270828661'
         # passwd = '05138xxxxxx'
-        passwd = '0513865219hjj'
-        # name = input('请输入用户名:\n')
-        # passwd = input('请输入密码:\n')
+        name = input('请输入用户名:\n')
+        passwd = input('请输入密码:\n')
 
         (cur_gid, cur_callback, cur_token) = get3Params()
 
